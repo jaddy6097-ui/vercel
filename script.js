@@ -1,52 +1,34 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #001122; /* Navy blue background */
-    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
 }
 
-.container {
-    background-color: #002244; /* Slightly lighter navy for contrast */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    max-width: 600px;
-    width: 100%;
-}
-
-h1, h2 {
-    text-align: center;
+.sidebar {
+    width: 250px;
+    background-color: #001122; /* Navy blue */
     color: #ffffff;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
 }
 
-form {
-    display: flex;
-    flex-direction: column;
+.sidebar h2 {
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-label {
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-input, textarea, select {
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #ffffff;
-    color: #000000;
-}
-
-button {
-    margin-top: 20px;
+.sidebar button {
+    display: block;
+    width: 100%;
     padding: 10px;
-    background-color: #004466; /* Navy accent */
+    margin-bottom: 10px;
+    background-color: #002244;
     color: #ffffff;
     border: none;
     border-radius: 4px;
@@ -54,7 +36,53 @@ button {
     font-size: 16px;
 }
 
-button:hover {
+.sidebar button:hover {
+    background-color: #004466; /* Navy accent */
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    width: calc(100% - 250px);
+}
+
+h1, h2 {
+    color: #001122;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #001122;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #000000;
+    box-sizing: border-box;
+}
+
+.accent-btn {
+    background-color: #004466; /* Navy accent */
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.accent-btn:hover {
     background-color: #005577;
 }
 
@@ -63,19 +91,36 @@ button:hover {
 }
 
 #invoice {
-    margin-top: 20px;
-    padding: 20px;
     background-color: #ffffff;
-    color: #000000;
+    padding: 20px;
     border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
 }
 
 #invoiceContent {
+    margin-bottom: 20px;
+}
+
+#invoiceLogo {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+#historyList {
     display: flex;
     flex-direction: column;
 }
 
-#invoiceLogo {
-    max-width: 100px;
+.history-item {
+    background-color: #ffffff;
+    padding: 10px;
     margin-bottom: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.history-item:hover {
+    background-color: #f0f0f0;
 }
