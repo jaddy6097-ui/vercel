@@ -1,40 +1,126 @@
+// Initialize
+let isLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
+let customerIdCounter = parseInt(localStorage.getItem('customerIdCounter')) || 1;
+let invoices = JSON.parse(localStorage.getItem('invoices')) || [];
+
+updateUI();
+
+document.getElementById('homeBtn').addEventListener('click', () => showSection('homeSection'));
+document.getElementById('loginBtn').addEventListener('click', () => showSection('loginSection'));
+document.getElementById('historyBtn').addEventListener('click', () => {
+    showSection('historySection');
+    loadHistory();
+});
+document.getElementById('logoutBtn').addEventListener('click', logout);
+
 document.getElementById('invoiceForm').addEventListener('submit', function(event) {
     event.preventDefault();
+    generateInvoice();
+});
 
-    // Get form values
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    if (username === 'admin' && password === 'admin') {
+        isLoggedIn = true;
+        localStorage.setItem('adminLoggedIn', 'true');
+        updateUI();
+        showSection('homeSection');
+    } else {
+        alert('Invalid credentials');
+    }
+});
+
+document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+function showSection(sectionId) {
+    document.querySelectorAll('.main-content > div').forEach(div => div.classList.add('hidden'));
+    document.getElementById(sectionId).classList.remove('hidden');
+}
+
+function updateUI() {
+    if (isLoggedIn) {
+        document.getElementById('loginBtn').classList.add('hidden');
+        document.getElementById('historyBtn').classList.remove('hidden');
+        document.getElementById('logoutBtn').classList.remove('hidden');
+    } else {
+        document.getElementById('loginBtn').classList.remove('hidden');
+        document.getElementById('historyBtn').classList.add('hidden');
+        document.getElementById('logoutBtn').classList.add('hidden');
+    }
+}
+
+function generateInvoice() {
     const billingAddress = document.getElementById('billingAddress').value;
     const email = document.getElementById('email').value;
     const phone = document.getElementById('phone').value;
     const purchasedItems = document.getElementById('purchasedItems').value;
+    const totalAmount = document.getElementById('totalAmount').value;
     const paymentMethod = document.getElementById('paymentMethod').value;
     const validity = document.getElementById('validity').value;
     const expire = document.getElementById('expire').value;
     const logoFile = document.getElementById('logo').files[0];
 
-    // Create invoice content
+    const customerId = customerIdCounter++;
+    localStorage.setItem('customerIdCounter', customerIdCounter);
+
+    const invoiceData = {
+        customerId,
+        billingAddress,
+        email,
+        phone,
+        purchasedItems,
+        totalAmount,
+        paymentMethod,
+        validity,
+        expire,
+        logoSrc: logoFile ? URL.createObjectURL(logoFile) : null,
+        date: new Date().toLocaleDateString()
+    };
+
+    invoices.push(invoiceData);
+    localStorage.setItem('invoices', JSON.stringify(invoices));
+
+    displayInvoice(invoiceData);
+    showSection('invoice');
+}
+
+function displayInvoice(data) {
     const invoiceContent = document.getElementById('invoiceContent');
-    invoiceContent.innerHTML = '';
-
-    // Logo
-    if (logoFile) {
-        const logoImg = document.createElement('img');
-        logoImg.id = 'invoiceLogo';
-        logoImg.src = URL.createObjectURL(logoFile);
-        invoiceContent.appendChild(logoImg);
-    }
-
-    // Details
-    const details = document.createElement('div');
-    details.innerHTML = `
-        <p><strong>Billing Address:</strong> ${billingAddress}</p>
-        <p><strong>Contact:</strong> ${email} | ${phone}</p>
-        <p><strong>Purchased Items:</strong><br>${purchasedItems.replace(/\n/g, '<br>')}</p>
-        <p><strong>Payment Method:</strong> ${paymentMethod}</p>
-        <p><strong>Validity:</strong> ${validity}</p>
-        <p><strong>Expire:</strong> ${expire}</p>
+    invoiceContent.innerHTML = `
+        <p><strong>Invoice Number:</strong> INV-${data.customerId}</p>
+        <p><strong>Customer ID:</strong> ${data.customerId}</p>
+        <p><strong>Date:</strong> ${data.date}</p>
+        ${data.logoSrc ? `<img id="invoiceLogo" src="${data.logoSrc}" alt="Logo">` : ''}
+        <p><strong>Billing Address:</strong> ${data.billingAddress}</p>
+        <p><strong>Contact:</strong> ${data.email} | ${data.phone}</p>
+        <p><strong>Purchased Items:</strong><br>${data.purchasedItems.replace(/\n/g, '<br>')}</p>
+        <p><strong>Total Amount:</strong> $${data.totalAmount}</p>
+        <p><strong>Payment Method:</strong> ${data.paymentMethod}</p>
+        <p><strong>Validity:</strong> ${data.validity}</p>
+        <p><strong>Expire:</strong> ${data.expire}</p>
     `;
-    invoiceContent.appendChild(details);
+}
 
-    // Show invoice
-    document.getElementById('invoice').classList.remove('hidden');
-});
+function loadHistory() {
+    const historyList = document.getElementById('historyList');
+    historyList.innerHTML = '';
+    invoices.forEach(invoice => {
+        const item = document.createElement('div');
+        item.className = 'history-item';
+        item.innerHTML = `<strong>Customer ID: ${invoice.customerId}</strong> - Date: ${invoice.date} - Total: $${invoice.totalAmount}`;
+        item.addEventListener('click', () => {
+            displayInvoice(invoice);
+            showSection('invoice');
+        });
+        historyList.appendChild(item);
+    });
+}
+
+function logout() {
+    isLoggedIn = false;
+    localStorage.removeItem('adminLoggedIn');
+    updateUI();
+    showSection('homeSection');
+}
