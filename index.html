@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumennode Invoice Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Lumennode Invoice Generator</h1>
+        <form id="invoiceForm">
+            <label for="billingAddress">Billing Address:</label>
+            <textarea id="billingAddress" required></textarea>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" required>
+
+            <label for="purchasedItems">Purchased Items:</label>
+            <textarea id="purchasedItems" placeholder="List items here, e.g., Item1 - $10, Item2 - $20" required></textarea>
+
+            <label for="logo">Logo:</label>
+            <input type="file" id="logo" accept="image/*" required>
+
+            <label for="paymentMethod">Payment Method:</label>
+            <select id="paymentMethod" required>
+                <option value="">Select</option>
+                <option value="Credit Card">Credit Card</option>
+                <option value="PayPal">PayPal</option>
+                <option value="Bank Transfer">Bank Transfer</option>
+                <option value="Cash">Cash</option>
+            </select>
+
+            <label for="validity">Validity (Start Date):</label>
+            <input type="date" id="validity" required>
+
+            <label for="expire">Expire (End Date):</label>
+            <input type="date" id="expire" required>
+
+            <button type="submit">Generate Invoice</button>
+        </form>
+
+        <div id="invoice" class="hidden">
+            <h2>Invoice</h2>
+            <div id="invoiceContent"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
