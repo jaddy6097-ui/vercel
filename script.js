@@ -1,40 +1,81 @@
-document.getElementById('invoiceForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+body {
+    font-family: Arial, sans-serif;
+    background-color: #001122; /* Navy blue background */
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
 
-    // Get form values
-    const billingAddress = document.getElementById('billingAddress').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
-    const purchasedItems = document.getElementById('purchasedItems').value;
-    const paymentMethod = document.getElementById('paymentMethod').value;
-    const validity = document.getElementById('validity').value;
-    const expire = document.getElementById('expire').value;
-    const logoFile = document.getElementById('logo').files[0];
+.container {
+    background-color: #002244; /* Slightly lighter navy for contrast */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    width: 100%;
+}
 
-    // Create invoice content
-    const invoiceContent = document.getElementById('invoiceContent');
-    invoiceContent.innerHTML = '';
+h1, h2 {
+    text-align: center;
+    color: #ffffff;
+}
 
-    // Logo
-    if (logoFile) {
-        const logoImg = document.createElement('img');
-        logoImg.id = 'invoiceLogo';
-        logoImg.src = URL.createObjectURL(logoFile);
-        invoiceContent.appendChild(logoImg);
-    }
+form {
+    display: flex;
+    flex-direction: column;
+}
 
-    // Details
-    const details = document.createElement('div');
-    details.innerHTML = `
-        <p><strong>Billing Address:</strong> ${billingAddress}</p>
-        <p><strong>Contact:</strong> ${email} | ${phone}</p>
-        <p><strong>Purchased Items:</strong><br>${purchasedItems.replace(/\n/g, '<br>')}</p>
-        <p><strong>Payment Method:</strong> ${paymentMethod}</p>
-        <p><strong>Validity:</strong> ${validity}</p>
-        <p><strong>Expire:</strong> ${expire}</p>
-    `;
-    invoiceContent.appendChild(details);
+label {
+    margin-top: 10px;
+    font-weight: bold;
+}
 
-    // Show invoice
-    document.getElementById('invoice').classList.remove('hidden');
-});
+input, textarea, select {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #004466; /* Navy accent */
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #005577;
+}
+
+.hidden {
+    display: none;
+}
+
+#invoice {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 8px;
+}
+
+#invoiceContent {
+    display: flex;
+    flex-direction: column;
+}
+
+#invoiceLogo {
+    max-width: 100px;
+    margin-bottom: 10px;
+}
