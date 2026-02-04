@@ -7,45 +7,87 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Lumennode Invoice Generator</h1>
-        <form id="invoiceForm">
-            <label for="billingAddress">Billing Address:</label>
-            <textarea id="billingAddress" required></textarea>
+    <div class="sidebar">
+        <h2>Lumennode</h2>
+        <button id="homeBtn">Home</button>
+        <button id="loginBtn">Admin Login</button>
+        <button id="historyBtn" class="hidden">Invoice History</button>
+        <button id="logoutBtn" class="hidden">Logout</button>
+    </div>
+    <div class="main-content">
+        <div id="homeSection">
+            <h1>Lumennode Invoice Generator</h1>
+            <form id="invoiceForm">
+                <div class="form-group">
+                    <label for="billingAddress">Billing Address:</label>
+                    <textarea id="billingAddress" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="purchasedItems">Purchased Items:</label>
+                    <textarea id="purchasedItems" placeholder="List items here, e.g., Item1 - $10, Item2 - $20" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="totalAmount">Total Amount:</label>
+                    <input type="number" id="totalAmount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="logo">Logo:</label>
+                    <input type="file" id="logo" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="paymentMethod">Payment Method:</label>
+                    <select id="paymentMethod" required>
+                        <option value="">Select</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="PayPal">PayPal</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Cash">Cash</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="validity">Validity (Start Date):</label>
+                    <input type="date" id="validity" required>
+                </div>
+                <div class="form-group">
+                    <label for="expire">Expire (End Date):</label>
+                    <input type="date" id="expire" required>
+                </div>
+                <button type="submit" class="accent-btn">Generate Invoice</button>
+            </form>
+        </div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" required>
+        <div id="loginSection" class="hidden">
+            <h2>Admin Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="accent-btn">Login</button>
+            </form>
+        </div>
 
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone" required>
-
-            <label for="purchasedItems">Purchased Items:</label>
-            <textarea id="purchasedItems" placeholder="List items here, e.g., Item1 - $10, Item2 - $20" required></textarea>
-
-            <label for="logo">Logo:</label>
-            <input type="file" id="logo" accept="image/*" required>
-
-            <label for="paymentMethod">Payment Method:</label>
-            <select id="paymentMethod" required>
-                <option value="">Select</option>
-                <option value="Credit Card">Credit Card</option>
-                <option value="PayPal">PayPal</option>
-                <option value="Bank Transfer">Bank Transfer</option>
-                <option value="Cash">Cash</option>
-            </select>
-
-            <label for="validity">Validity (Start Date):</label>
-            <input type="date" id="validity" required>
-
-            <label for="expire">Expire (End Date):</label>
-            <input type="date" id="expire" required>
-
-            <button type="submit">Generate Invoice</button>
-        </form>
+        <div id="historySection" class="hidden">
+            <h2>Invoice History</h2>
+            <div id="historyList"></div>
+        </div>
 
         <div id="invoice" class="hidden">
             <h2>Invoice</h2>
             <div id="invoiceContent"></div>
+            <button id="printBtn" class="accent-btn">Print Invoice</button>
         </div>
     </div>
     <script src="script.js"></script>
